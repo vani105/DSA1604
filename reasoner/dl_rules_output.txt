@@ -1,0 +1,6 @@
+Classification by HermiT on the current alert snapshot stored in the ontology:
+  MandatoryEvacuationWard    ['Pallikaranai', 'Perungudi']
+  PortablePumpNeededWard     ['Perungudi']
+  EmergencyHospital          (no members)
+Snapshot alert levels: {'AnnaNagar': 'AL_Green', 'Kilpauk': 'AL_Green', 'Mylapore': 'AL_Green', 'Pallikaranai': 'AL_Red', 'Perungudi': 'AL_Red', 'Saidapet': 'AL_Yellow', 'Sholinganallur': 'AL_Orange', 'Velachery': 'AL_Orange'}
+Inconsistent classes : none

@@ -1,0 +1,42 @@
+==========================================================================
+RUN: Test 1 - seeded unsatisfiable class (AmphibiousRoad = Road AND WaterBody)
+FILE: test_fault1.owl
+--------------------------------------------------------------------------
+HermiT result : ontology is consistent
+Unsatisfiable classes (equivalent to owl:Nothing): ['AmphibiousRoad']
+==========================================================================
+RUN: Test 2 - seeded individual typed LowLyingWard AND HighGroundWard
+FILE: test_fault2.owl
+--------------------------------------------------------------------------
+HermiT result : ONTOLOGY IS INCONSISTENT
+==========================================================================
+RUN: Test 3 - seeded functional-property clash (two alert levels for one ward)
+FILE: test_fault3.owl
+--------------------------------------------------------------------------
+HermiT result : ONTOLOGY IS INCONSISTENT
+==========================================================================
+RUN: Test 4 - FIXED ontology (final deliverable)
+FILE: flood_ontology.owl
+--------------------------------------------------------------------------
+HermiT result : ontology is consistent
+Unsatisfiable classes (equivalent to owl:Nothing): none
+
+Inferred classification (defined classes -> members):
+  ServedWard               ['Pallikaranai', 'Perungudi', 'Saidapet', 'Velachery']
+  UnprotectedWard          ['Perungudi']
+  OperationalPumpStation   ['PS_Pallikaranai', 'PS_Saidapet', 'PS_Velachery']
+
+Inferred inverse property isServedBy:
+  AnnaNagar       isServedBy -> []
+  Kilpauk         isServedBy -> []
+  Mylapore        isServedBy -> []
+  Pallikaranai    isServedBy -> ['PS_Pallikaranai']
+  Perungudi       isServedBy -> ['PS_Perungudi']
+  Saidapet        isServedBy -> ['PS_Saidapet']
+  Sholinganallur  isServedBy -> []
+  Velachery       isServedBy -> ['PS_Velachery']
+
+Inferred transitive flowsInto (drain -> ... -> water body):
+  SWD_Pallikaranai  flowsInto -> ['BuckinghamCanal']
+  SWD_Saidapet      flowsInto -> ['AdyarRiver', 'BuckinghamCanal']
+  SWD_Velachery     flowsInto -> ['AdyarRiver', 'BuckinghamCanal']

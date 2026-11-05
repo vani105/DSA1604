@@ -1,0 +1,11 @@
+# CQ1: Which low-lying wards are served by a NON-operational pump station
+#      (and therefore need a portable pump), with their population?
+PREFIX flood: <http://example.org/flood#>
+SELECT ?ward ?station ?population
+WHERE {
+  ?ward a flood:LowLyingWard ;
+        flood:hasPopulation ?population .
+  ?station flood:servesWard ?ward ;
+           flood:isOperational false .
+}
+ORDER BY DESC(?population)

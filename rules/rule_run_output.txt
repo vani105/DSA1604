@@ -1,0 +1,88 @@
+Working memory: 8 wards, 3 roads, 2 subways; free portable pumps ['PP_01', 'PP_02']
+
+[01] FIRE R01 Red alert (P90) on Pallikaranai
+     -> alert[Pallikaranai] = RED
+     conflict set=15, runner-up=R02:Velachery
+[02] FIRE R05 Mandatory evacuation (P100) on Pallikaranai
+     -> MANDATORY evacuation of 1400 residents of Pallikaranai: placed 600->RC_PallikaranaiSchool; unplaced 800
+     conflict set=14, runner-up=R02:Velachery
+[03] FIRE R07 Camp overflow (P88) on Pallikaranai
+     -> 800 residents of Pallikaranai have no camp space: open overflow shelter in a high-ground ward, alert camp officers
+     conflict set=14, runner-up=R02:Velachery
+[04] FIRE R02 Orange alert (P80) on Velachery
+     -> alert[Velachery] = ORANGE
+     conflict set=13, runner-up=R02:Sholinganallur
+[05] FIRE R04 River-level escalation (P85) on Velachery
+     -> receiving water body above danger level -> escalate Velachery to RED
+     conflict set=14, runner-up=R02:Sholinganallur
+[06] FIRE R05 Mandatory evacuation (P100) on Velachery
+     -> MANDATORY evacuation of 2200 residents of Velachery: placed 1500->RC_AnnaNagarHall, 500->RC_VelacheryHS; unplaced 200
+     conflict set=14, runner-up=R12:Velachery
+[07] FIRE R12 Hospital protection (P92) on Velachery
+     -> hospital(s) ['HOS_VelacheryGH'] on emergency footing; boats on station: ['RB_01']
+     conflict set=14, runner-up=R07:Velachery
+[08] FIRE R07 Camp overflow (P88) on Velachery
+     -> 200 residents of Velachery have no camp space: open overflow shelter in a high-ground ward, alert camp officers
+     conflict set=13, runner-up=R02:Sholinganallur
+[09] FIRE R02 Orange alert (P80) on Sholinganallur
+     -> alert[Sholinganallur] = ORANGE
+     conflict set=12, runner-up=R02:Perungudi
+[10] FIRE R02 Orange alert (P80) on Perungudi
+     -> alert[Perungudi] = ORANGE
+     conflict set=11, runner-up=R11:SW_SaidapetSubway
+[11] FIRE R08 Deploy portable pump (P95) on Perungudi
+     -> deploy portable pump PP_01 to Perungudi (station PS_Perungudi is DOWN)
+     conflict set=11, runner-up=R11:SW_SaidapetSubway
+[12] FIRE R11 Subway closure (P78) on SW_SaidapetSubway
+     -> close SW_SaidapetSubway in Saidapet (depth 0.6 m) and dispatch dewatering pump
+     conflict set=10, runner-up=R10:RD_VelacheryMainRd
+[13] FIRE R10 Road closure (P75) on RD_VelacheryMainRd
+     -> close RD_VelacheryMainRd in Velachery (depth 0.45 m) and divert traffic
+     conflict set=9, runner-up=R10:RD_GST
+[14] FIRE R10 Road closure (P75) on RD_GST
+     -> close RD_GST in Pallikaranai (depth 0.35 m) and divert traffic
+     conflict set=8, runner-up=R03:Saidapet
+[15] FIRE R03 Yellow alert (P70) on Saidapet
+     -> alert[Saidapet] = YELLOW
+     conflict set=7, runner-up=R03:Mylapore
+[16] FIRE R04 River-level escalation (P85) on Saidapet
+     -> receiving water body above danger level -> escalate Saidapet to ORANGE
+     conflict set=8, runner-up=R03:Mylapore
+[17] FIRE R03 Yellow alert (P70) on Mylapore
+     -> alert[Mylapore] = YELLOW
+     conflict set=8, runner-up=R03:AnnaNagar
+[18] FIRE R03 Yellow alert (P70) on AnnaNagar
+     -> alert[AnnaNagar] = YELLOW
+     conflict set=7, runner-up=R06:Sholinganallur
+[19] FIRE R06 Advisory evacuation (P60) on Sholinganallur
+     -> ADVISORY evacuation of 1200 residents of Sholinganallur: placed 0->RC_AnnaNagarHall; unplaced 1200
+     conflict set=6, runner-up=R06:Perungudi
+[20] FIRE R07 Camp overflow (P88) on Sholinganallur
+     -> 1200 residents of Sholinganallur have no camp space: open overflow shelter in a high-ground ward, alert camp officers
+     conflict set=6, runner-up=R06:Perungudi
+[21] FIRE R06 Advisory evacuation (P60) on Perungudi
+     -> ADVISORY evacuation of 900 residents of Perungudi: placed 0->RC_VelacheryHS; unplaced 900
+     conflict set=5, runner-up=R06:Saidapet
+[22] FIRE R07 Camp overflow (P88) on Perungudi
+     -> 900 residents of Perungudi have no camp space: open overflow shelter in a high-ground ward, alert camp officers
+     conflict set=5, runner-up=R06:Saidapet
+[23] FIRE R06 Advisory evacuation (P60) on Saidapet
+     -> ADVISORY evacuation of 450 residents of Saidapet: placed 450->RC_SaidapetCommunity; unplaced 0
+     conflict set=4, runner-up=R09:Velachery
+[24] FIRE R09 Standby pump (P50) on Velachery
+     -> pre-position portable pump PP_02 on standby in Velachery
+     conflict set=3, runner-up=R09:Pallikaranai
+
+========================================================================
+FINAL STATE
+  Pallikaranai    alert=RED     evacuation=MANDATORY  unplaced=800
+  Velachery       alert=RED     evacuation=MANDATORY  unplaced=200
+  Perungudi       alert=ORANGE  evacuation=ADVISORY   unplaced=900
+  Sholinganallur  alert=ORANGE  evacuation=ADVISORY   unplaced=1200
+  Saidapet        alert=ORANGE  evacuation=ADVISORY   unplaced=0
+  Mylapore        alert=YELLOW  evacuation=-          unplaced=-
+  AnnaNagar       alert=YELLOW  evacuation=-          unplaced=-
+  Kilpauk         alert=GREEN   evacuation=-          unplaced=-
+  free portable pumps left : none
+  camp occupancy / capacity: {'RC_PallikaranaiSchool': '600/600', 'RC_SaidapetCommunity': '450/500', 'RC_AnnaNagarHall': '1500/1500', 'RC_VelacheryHS': '800/800'}
+  total rule firings       : 24

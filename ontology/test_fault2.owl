@@ -1,0 +1,699 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://example.org/flood"
+         xmlns="http://example.org/flood#">
+
+<owl:Ontology rdf:about="http://example.org/flood"/>
+
+<owl:ObjectProperty rdf:about="#servesWard">
+  <rdfs:domain rdf:resource="#PumpStation"/>
+  <rdfs:range rdf:resource="#Ward"/>
+  <owl:inverseOf rdf:resource="#isServedBy"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isServedBy">
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="#PumpStation"/>
+  <owl:inverseOf rdf:resource="#servesWard"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#locatedIn">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Infrastructure"/>
+        <rdf:Description rdf:about="#Facility"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#Ward"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#flowsInto">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#StormwaterDrain"/>
+        <rdf:Description rdf:about="#WaterBody"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#WaterBody"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasAlertLevel">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="#RainfallAlertLevel"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#causes">
+  <rdfs:domain rdf:resource="#HeavyRainfall"/>
+  <rdfs:range rdf:resource="#FloodEvent"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#affects">
+  <rdfs:domain rdf:resource="#FloodEvent"/>
+  <rdfs:range rdf:resource="#Ward"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#inundates">
+  <rdfs:domain rdf:resource="#FloodEvent"/>
+  <rdfs:range>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Road"/>
+        <rdf:Description rdf:about="#Subway"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:range>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#evacuatesTo">
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="#ReliefCamp"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#deployedIn">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#PortablePump"/>
+        <rdf:Description rdf:about="#RescueBoat"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#Ward"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#managedBy">
+  <rdfs:domain>
+    <owl:Class>
+      <owl:unionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Facility"/>
+        <rdf:Description rdf:about="#PumpStation"/>
+      </owl:unionOf>
+    </owl:Class>
+  </rdfs:domain>
+  <rdfs:range rdf:resource="#Officer"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#partOf">
+  <rdfs:domain rdf:resource="#Pump"/>
+  <rdfs:range rdf:resource="#PumpStation"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#issuedFor">
+  <rdfs:domain rdf:resource="#EvacuationOrder"/>
+  <rdfs:range rdf:resource="#Ward"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#hasElevationM">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPopulation">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasAtRiskPopulation">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Ward"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasCapacity">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ReliefCamp"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPumpingCapacityLps">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Pump"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasRainfallMm">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#HeavyRainfall"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasThresholdMm">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#RainfallAlertLevel"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasWaterLevelM">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#WaterBody"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDangerLevelM">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#WaterBody"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isOperational">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PumpStation"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPhone">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Officer"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#GeographicArea">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Ward">
+  <rdfs:subClassOf rdf:resource="#GeographicArea"/>
+  <owl:disjointWith rdf:resource="#WaterBody"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LowLyingWard">
+  <rdfs:subClassOf rdf:resource="#Ward"/>
+  <owl:disjointWith rdf:resource="#HighGroundWard"/>
+</owl:Class>
+
+<owl:Class rdf:about="#HighGroundWard">
+  <rdfs:subClassOf rdf:resource="#Ward"/>
+</owl:Class>
+
+<owl:Class rdf:about="#WaterBody">
+  <rdfs:subClassOf rdf:resource="#GeographicArea"/>
+</owl:Class>
+
+<owl:Class rdf:about="#River">
+  <rdfs:subClassOf rdf:resource="#WaterBody"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Canal">
+  <rdfs:subClassOf rdf:resource="#WaterBody"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Reservoir">
+  <rdfs:subClassOf rdf:resource="#WaterBody"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Infrastructure">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PumpStation">
+  <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StormwaterDrain">
+  <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Road">
+  <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Subway">
+  <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Facility">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ReliefCamp">
+  <rdfs:subClassOf rdf:resource="#Facility"/>
+  <owl:disjointWith rdf:resource="#Hospital"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Hospital">
+  <rdfs:subClassOf rdf:resource="#Facility"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Resource">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Pump">
+  <rdfs:subClassOf rdf:resource="#Resource"/>
+  <owl:disjointWith rdf:resource="#RescueBoat"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PortablePump">
+  <rdfs:subClassOf rdf:resource="#Pump"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RescueBoat">
+  <rdfs:subClassOf rdf:resource="#Resource"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Officer">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RainfallAlertLevel">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FloodEvent">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EvacuationOrder">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#HeavyRainfall">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ServedWard">
+  <rdfs:subClassOf rdf:resource="#Ward"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Ward"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isServedBy"/>
+          <owl:someValuesFrom rdf:resource="#PumpStation"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#UnprotectedWard">
+  <rdfs:subClassOf rdf:resource="#Ward"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Ward"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isServedBy"/>
+          <owl:someValuesFrom>
+            <owl:Class>
+              <owl:intersectionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#PumpStation"/>
+                <owl:Restriction>
+                  <owl:onProperty rdf:resource="#isOperational"/>
+                  <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+                </owl:Restriction>
+              </owl:intersectionOf>
+            </owl:Class>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#OperationalPumpStation">
+  <rdfs:subClassOf rdf:resource="#PumpStation"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#PumpStation"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isOperational"/>
+          <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#Velachery">
+  <rdf:type rdf:resource="#LowLyingWard"/>
+  <evacuatesTo rdf:resource="#RC_AnnaNagarHall"/>
+  <evacuatesTo rdf:resource="#RC_VelacheryHS"/>
+  <hasAlertLevel rdf:resource="#AL_Orange"/>
+  <rdf:type rdf:resource="#HighGroundWard"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.5</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">142000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2200</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Pallikaranai">
+  <rdf:type rdf:resource="#LowLyingWard"/>
+  <evacuatesTo rdf:resource="#RC_PallikaranaiSchool"/>
+  <hasAlertLevel rdf:resource="#AL_Red"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.8</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">98000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1400</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Saidapet">
+  <rdf:type rdf:resource="#LowLyingWard"/>
+  <evacuatesTo rdf:resource="#RC_SaidapetCommunity"/>
+  <hasAlertLevel rdf:resource="#AL_Yellow"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.2</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">121000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">450</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Perungudi">
+  <rdf:type rdf:resource="#LowLyingWard"/>
+  <evacuatesTo rdf:resource="#RC_VelacheryHS"/>
+  <hasAlertLevel rdf:resource="#AL_Red"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.1</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">87000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">900</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Sholinganallur">
+  <rdf:type rdf:resource="#LowLyingWard"/>
+  <evacuatesTo rdf:resource="#RC_AnnaNagarHall"/>
+  <hasAlertLevel rdf:resource="#AL_Orange"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.9</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">134000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1200</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AnnaNagar">
+  <rdf:type rdf:resource="#HighGroundWard"/>
+  <hasAlertLevel rdf:resource="#AL_Green"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">11.5</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">165000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Kilpauk">
+  <rdf:type rdf:resource="#HighGroundWard"/>
+  <hasAlertLevel rdf:resource="#AL_Green"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9.8</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">76000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Mylapore">
+  <rdf:type rdf:resource="#HighGroundWard"/>
+  <hasAlertLevel rdf:resource="#AL_Green"/>
+  <hasElevationM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6.4</hasElevationM>
+  <hasPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">110000</hasPopulation>
+  <hasAtRiskPopulation rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</hasAtRiskPopulation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AdyarRiver">
+  <rdf:type rdf:resource="#River"/>
+  <flowsInto rdf:resource="#BuckinghamCanal"/>
+  <hasWaterLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.1</hasWaterLevelM>
+  <hasDangerLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5.0</hasDangerLevelM>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#CooumRiver">
+  <rdf:type rdf:resource="#River"/>
+  <flowsInto rdf:resource="#BuckinghamCanal"/>
+  <hasWaterLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.4</hasWaterLevelM>
+  <hasDangerLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.0</hasDangerLevelM>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BuckinghamCanal">
+  <rdf:type rdf:resource="#Canal"/>
+  <hasWaterLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.9</hasWaterLevelM>
+  <hasDangerLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.5</hasDangerLevelM>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ChembarambakkamLake">
+  <rdf:type rdf:resource="#Reservoir"/>
+  <hasWaterLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">21.4</hasWaterLevelM>
+  <hasDangerLevelM rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">24.0</hasDangerLevelM>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SWD_Velachery">
+  <rdf:type rdf:resource="#StormwaterDrain"/>
+  <flowsInto rdf:resource="#AdyarRiver"/>
+  <locatedIn rdf:resource="#Velachery"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SWD_Pallikaranai">
+  <rdf:type rdf:resource="#StormwaterDrain"/>
+  <flowsInto rdf:resource="#BuckinghamCanal"/>
+  <locatedIn rdf:resource="#Pallikaranai"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SWD_Saidapet">
+  <rdf:type rdf:resource="#StormwaterDrain"/>
+  <flowsInto rdf:resource="#AdyarRiver"/>
+  <locatedIn rdf:resource="#Saidapet"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#OFF_Ramesh">
+  <rdf:type rdf:resource="#Officer"/>
+  <hasPhone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">+91-44-2500-0101</hasPhone>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#OFF_Priya">
+  <rdf:type rdf:resource="#Officer"/>
+  <hasPhone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">+91-44-2500-0102</hasPhone>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#OFF_Karthik">
+  <rdf:type rdf:resource="#Officer"/>
+  <hasPhone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">+91-44-2500-0103</hasPhone>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PS_Velachery">
+  <rdf:type rdf:resource="#PumpStation"/>
+  <servesWard rdf:resource="#Velachery"/>
+  <locatedIn rdf:resource="#Velachery"/>
+  <managedBy rdf:resource="#OFF_Ramesh"/>
+  <isOperational rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isOperational>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PS_Pallikaranai">
+  <rdf:type rdf:resource="#PumpStation"/>
+  <servesWard rdf:resource="#Pallikaranai"/>
+  <locatedIn rdf:resource="#Pallikaranai"/>
+  <managedBy rdf:resource="#OFF_Ramesh"/>
+  <isOperational rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isOperational>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PS_Saidapet">
+  <rdf:type rdf:resource="#PumpStation"/>
+  <servesWard rdf:resource="#Saidapet"/>
+  <locatedIn rdf:resource="#Saidapet"/>
+  <managedBy rdf:resource="#OFF_Priya"/>
+  <isOperational rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isOperational>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PS_Perungudi">
+  <rdf:type rdf:resource="#PumpStation"/>
+  <servesWard rdf:resource="#Perungudi"/>
+  <locatedIn rdf:resource="#Perungudi"/>
+  <managedBy rdf:resource="#OFF_Karthik"/>
+  <isOperational rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isOperational>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FP_Velachery1">
+  <rdf:type rdf:resource="#Pump"/>
+  <partOf rdf:resource="#PS_Velachery"/>
+  <hasPumpingCapacityLps rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1500</hasPumpingCapacityLps>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FP_Pallikaranai1">
+  <rdf:type rdf:resource="#Pump"/>
+  <partOf rdf:resource="#PS_Pallikaranai"/>
+  <hasPumpingCapacityLps rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2000</hasPumpingCapacityLps>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PP_01">
+  <rdf:type rdf:resource="#PortablePump"/>
+  <hasPumpingCapacityLps rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</hasPumpingCapacityLps>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PP_02">
+  <rdf:type rdf:resource="#PortablePump"/>
+  <hasPumpingCapacityLps rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</hasPumpingCapacityLps>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PP_03">
+  <rdf:type rdf:resource="#PortablePump"/>
+  <deployedIn rdf:resource="#Sholinganallur"/>
+  <hasPumpingCapacityLps rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</hasPumpingCapacityLps>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RC_VelacheryHS">
+  <rdf:type rdf:resource="#ReliefCamp"/>
+  <locatedIn rdf:resource="#Velachery"/>
+  <managedBy rdf:resource="#OFF_Ramesh"/>
+  <hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">800</hasCapacity>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RC_PallikaranaiSchool">
+  <rdf:type rdf:resource="#ReliefCamp"/>
+  <locatedIn rdf:resource="#Pallikaranai"/>
+  <managedBy rdf:resource="#OFF_Priya"/>
+  <hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">600</hasCapacity>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RC_SaidapetCommunity">
+  <rdf:type rdf:resource="#ReliefCamp"/>
+  <locatedIn rdf:resource="#Saidapet"/>
+  <managedBy rdf:resource="#OFF_Priya"/>
+  <hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</hasCapacity>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RC_AnnaNagarHall">
+  <rdf:type rdf:resource="#ReliefCamp"/>
+  <locatedIn rdf:resource="#AnnaNagar"/>
+  <managedBy rdf:resource="#OFF_Karthik"/>
+  <hasCapacity rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1500</hasCapacity>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HOS_VelacheryGH">
+  <rdf:type rdf:resource="#Hospital"/>
+  <locatedIn rdf:resource="#Velachery"/>
+  <managedBy rdf:resource="#OFF_Ramesh"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HOS_AnnaNagarGH">
+  <rdf:type rdf:resource="#Hospital"/>
+  <locatedIn rdf:resource="#AnnaNagar"/>
+  <managedBy rdf:resource="#OFF_Karthik"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RD_VelacheryMainRd">
+  <rdf:type rdf:resource="#Road"/>
+  <locatedIn rdf:resource="#Velachery"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RD_OMR">
+  <rdf:type rdf:resource="#Road"/>
+  <locatedIn rdf:resource="#Sholinganallur"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RD_GST">
+  <rdf:type rdf:resource="#Road"/>
+  <locatedIn rdf:resource="#Pallikaranai"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SW_SaidapetSubway">
+  <rdf:type rdf:resource="#Subway"/>
+  <locatedIn rdf:resource="#Saidapet"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SW_KilpaukUnderpass">
+  <rdf:type rdf:resource="#Subway"/>
+  <locatedIn rdf:resource="#Kilpauk"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RB_01">
+  <rdf:type rdf:resource="#RescueBoat"/>
+  <deployedIn rdf:resource="#Velachery"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RB_02">
+  <rdf:type rdf:resource="#RescueBoat"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AL_Green">
+  <rdf:type rdf:resource="#RainfallAlertLevel"/>
+  <hasThresholdMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasThresholdMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AL_Yellow">
+  <rdf:type rdf:resource="#RainfallAlertLevel"/>
+  <hasThresholdMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">64.5</hasThresholdMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AL_Orange">
+  <rdf:type rdf:resource="#RainfallAlertLevel"/>
+  <hasThresholdMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">115.6</hasThresholdMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AL_Red">
+  <rdf:type rdf:resource="#RainfallAlertLevel"/>
+  <hasThresholdMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">204.5</hasThresholdMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HR_Event_A">
+  <rdf:type rdf:resource="#HeavyRainfall"/>
+  <causes rdf:resource="#FE_01"/>
+  <hasRainfallMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">132.4</hasRainfallMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HR_Event_B">
+  <rdf:type rdf:resource="#HeavyRainfall"/>
+  <causes rdf:resource="#FE_02"/>
+  <hasRainfallMm rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">218.0</hasRainfallMm>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FE_01">
+  <rdf:type rdf:resource="#FloodEvent"/>
+  <affects rdf:resource="#Saidapet"/>
+  <affects rdf:resource="#Velachery"/>
+  <inundates rdf:resource="#SW_SaidapetSubway"/>
+  <inundates rdf:resource="#RD_VelacheryMainRd"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#FE_02">
+  <rdf:type rdf:resource="#FloodEvent"/>
+  <affects rdf:resource="#Pallikaranai"/>
+  <affects rdf:resource="#Perungudi"/>
+  <affects rdf:resource="#Sholinganallur"/>
+  <inundates rdf:resource="#RD_OMR"/>
+  <inundates rdf:resource="#RD_GST"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#EO_01">
+  <rdf:type rdf:resource="#EvacuationOrder"/>
+  <issuedFor rdf:resource="#Pallikaranai"/>
+</owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#AL_Green"/>
+    <rdf:Description rdf:about="#AL_Yellow"/>
+    <rdf:Description rdf:about="#AL_Orange"/>
+    <rdf:Description rdf:about="#AL_Red"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#PumpStation"/>
+    <rdf:Description rdf:about="#StormwaterDrain"/>
+    <rdf:Description rdf:about="#Road"/>
+    <rdf:Description rdf:about="#Subway"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#River"/>
+    <rdf:Description rdf:about="#Canal"/>
+    <rdf:Description rdf:about="#Reservoir"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#GeographicArea"/>
+    <rdf:Description rdf:about="#Infrastructure"/>
+    <rdf:Description rdf:about="#Facility"/>
+    <rdf:Description rdf:about="#Resource"/>
+    <rdf:Description rdf:about="#Officer"/>
+    <rdf:Description rdf:about="#RainfallAlertLevel"/>
+    <rdf:Description rdf:about="#FloodEvent"/>
+    <rdf:Description rdf:about="#EvacuationOrder"/>
+    <rdf:Description rdf:about="#HeavyRainfall"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

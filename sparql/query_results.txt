@@ -1,0 +1,33 @@
+Loaded 484 triples from flood_ontology.ttl
+
+==============================================================================
+cq1.rq
+# CQ1: Which low-lying wards are served by a NON-operational pump station
+------------------------------------------------------------------------------
+ward       station       population
+---------  ------------  ----------
+Perungudi  PS_Perungudi  87000     
+(1 rows)
+
+==============================================================================
+cq2.rq
+# CQ2: For every low-lying ward, can its designated relief camp(s) hold the residents
+------------------------------------------------------------------------------
+ward            atRisk  totalCampCapacity  status   
+--------------  ------  -----------------  ---------
+Pallikaranai    1400    600                SHORTFALL
+Perungudi       900     800                SHORTFALL
+Saidapet        450     500                ENOUGH   
+Sholinganallur  1200    1500               ENOUGH   
+Velachery       2200    2300               ENOUGH   
+(5 rows)
+
+==============================================================================
+cq3.rq
+# CQ3: Which hospitals lie in wards affected by a flood event, and which officer
+------------------------------------------------------------------------------
+hospital         ward       event  officer     phone           
+---------------  ---------  -----  ----------  ----------------
+HOS_VelacheryGH  Velachery  FE_01  OFF_Ramesh  +91-44-2500-0101
+(1 rows)
+

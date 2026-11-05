@@ -1,0 +1,12 @@
+# CQ3: Which hospitals lie in wards affected by a flood event, and which officer
+#      (with phone number) must be called?
+PREFIX flood: <http://example.org/flood#>
+SELECT ?hospital ?ward ?event ?officer ?phone
+WHERE {
+  ?hospital a flood:Hospital ;
+            flood:locatedIn ?ward ;
+            flood:managedBy ?officer .
+  ?event a flood:FloodEvent ;
+         flood:affects ?ward .
+  ?officer flood:hasPhone ?phone .
+}

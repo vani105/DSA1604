@@ -1,0 +1,507 @@
+@prefix flood: <http://example.org/flood#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/flood> a owl:Ontology .
+
+flood:ChembarambakkamLake a flood:Reservoir,
+        owl:NamedIndividual ;
+    flood:hasDangerLevelM 24.0 ;
+    flood:hasWaterLevelM 21.4 .
+
+flood:CooumRiver a flood:River,
+        owl:NamedIndividual ;
+    flood:flowsInto flood:BuckinghamCanal ;
+    flood:hasDangerLevelM 4.0 ;
+    flood:hasWaterLevelM 2.4 .
+
+flood:EO_01 a flood:EvacuationOrder,
+        owl:NamedIndividual ;
+    flood:issuedFor flood:Pallikaranai .
+
+flood:FP_Pallikaranai1 a flood:Pump,
+        owl:NamedIndividual ;
+    flood:hasPumpingCapacityLps 2000 ;
+    flood:partOf flood:PS_Pallikaranai .
+
+flood:FP_Velachery1 a flood:Pump,
+        owl:NamedIndividual ;
+    flood:hasPumpingCapacityLps 1500 ;
+    flood:partOf flood:PS_Velachery .
+
+flood:HOS_AnnaNagarGH a flood:Hospital,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:AnnaNagar ;
+    flood:managedBy flood:OFF_Karthik .
+
+flood:HOS_VelacheryGH a flood:Hospital,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Velachery ;
+    flood:managedBy flood:OFF_Ramesh .
+
+flood:HR_Event_A a flood:HeavyRainfall,
+        owl:NamedIndividual ;
+    flood:causes flood:FE_01 ;
+    flood:hasRainfallMm 132.4 .
+
+flood:HR_Event_B a flood:HeavyRainfall,
+        owl:NamedIndividual ;
+    flood:causes flood:FE_02 ;
+    flood:hasRainfallMm 218.0 .
+
+flood:Mylapore a flood:HighGroundWard,
+        owl:NamedIndividual ;
+    flood:hasAlertLevel flood:AL_Green ;
+    flood:hasAtRiskPopulation 0 ;
+    flood:hasElevationM 6.4 ;
+    flood:hasPopulation 110000 .
+
+flood:OperationalPumpStation a owl:Class ;
+    rdfs:subClassOf flood:PumpStation ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( flood:PumpStation [ a owl:Restriction ;
+                        owl:hasValue true ;
+                        owl:onProperty flood:isOperational ] ) ] .
+
+flood:PP_01 a flood:PortablePump,
+        owl:NamedIndividual ;
+    flood:hasPumpingCapacityLps 500 .
+
+flood:PP_02 a flood:PortablePump,
+        owl:NamedIndividual ;
+    flood:hasPumpingCapacityLps 500 .
+
+flood:PP_03 a flood:PortablePump,
+        owl:NamedIndividual ;
+    flood:deployedIn flood:Sholinganallur ;
+    flood:hasPumpingCapacityLps 500 .
+
+flood:PS_Perungudi a flood:PumpStation,
+        owl:NamedIndividual ;
+    flood:isOperational false ;
+    flood:locatedIn flood:Perungudi ;
+    flood:managedBy flood:OFF_Karthik ;
+    flood:servesWard flood:Perungudi .
+
+flood:PS_Saidapet a flood:PumpStation,
+        owl:NamedIndividual ;
+    flood:isOperational true ;
+    flood:locatedIn flood:Saidapet ;
+    flood:managedBy flood:OFF_Priya ;
+    flood:servesWard flood:Saidapet .
+
+flood:RB_01 a flood:RescueBoat,
+        owl:NamedIndividual ;
+    flood:deployedIn flood:Velachery .
+
+flood:RB_02 a flood:RescueBoat,
+        owl:NamedIndividual .
+
+flood:SWD_Pallikaranai a flood:StormwaterDrain,
+        owl:NamedIndividual ;
+    flood:flowsInto flood:BuckinghamCanal ;
+    flood:locatedIn flood:Pallikaranai .
+
+flood:SWD_Saidapet a flood:StormwaterDrain,
+        owl:NamedIndividual ;
+    flood:flowsInto flood:AdyarRiver ;
+    flood:locatedIn flood:Saidapet .
+
+flood:SWD_Velachery a flood:StormwaterDrain,
+        owl:NamedIndividual ;
+    flood:flowsInto flood:AdyarRiver ;
+    flood:locatedIn flood:Velachery .
+
+flood:SW_KilpaukUnderpass a flood:Subway,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Kilpauk .
+
+flood:ServedWard a owl:Class ;
+    rdfs:subClassOf flood:Ward ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( flood:Ward [ a owl:Restriction ;
+                        owl:onProperty flood:isServedBy ;
+                        owl:someValuesFrom flood:PumpStation ] ) ] .
+
+flood:UnprotectedWard a owl:Class ;
+    rdfs:subClassOf flood:Ward ;
+    owl:equivalentClass [ a owl:Class ;
+            owl:intersectionOf ( flood:Ward [ a owl:Restriction ;
+                        owl:onProperty flood:isServedBy ;
+                        owl:someValuesFrom [ a owl:Class ;
+                                owl:intersectionOf ( flood:PumpStation [ a owl:Restriction ;
+                                            owl:hasValue false ;
+                                            owl:onProperty flood:isOperational ] ) ] ] ) ] .
+
+flood:affects a owl:ObjectProperty ;
+    rdfs:domain flood:FloodEvent ;
+    rdfs:range flood:Ward .
+
+flood:causes a owl:ObjectProperty ;
+    rdfs:domain flood:HeavyRainfall ;
+    rdfs:range flood:FloodEvent .
+
+flood:deployedIn a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( flood:PortablePump flood:RescueBoat ) ] ;
+    rdfs:range flood:Ward .
+
+flood:evacuatesTo a owl:ObjectProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range flood:ReliefCamp .
+
+flood:flowsInto a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( flood:StormwaterDrain flood:WaterBody ) ] ;
+    rdfs:range flood:WaterBody .
+
+flood:hasAlertLevel a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range flood:RainfallAlertLevel .
+
+flood:hasAtRiskPopulation a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range xsd:integer .
+
+flood:hasCapacity a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:ReliefCamp ;
+    rdfs:range xsd:integer .
+
+flood:hasDangerLevelM a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:WaterBody ;
+    rdfs:range xsd:decimal .
+
+flood:hasElevationM a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range xsd:decimal .
+
+flood:hasPhone a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:Officer ;
+    rdfs:range xsd:string .
+
+flood:hasPopulation a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range xsd:integer .
+
+flood:hasPumpingCapacityLps a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:Pump ;
+    rdfs:range xsd:integer .
+
+flood:hasRainfallMm a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:HeavyRainfall ;
+    rdfs:range xsd:decimal .
+
+flood:hasThresholdMm a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:RainfallAlertLevel ;
+    rdfs:range xsd:decimal .
+
+flood:hasWaterLevelM a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:WaterBody ;
+    rdfs:range xsd:decimal .
+
+flood:inundates a owl:ObjectProperty ;
+    rdfs:domain flood:FloodEvent ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( flood:Road flood:Subway ) ] .
+
+flood:issuedFor a owl:ObjectProperty ;
+    rdfs:domain flood:EvacuationOrder ;
+    rdfs:range flood:Ward .
+
+flood:locatedIn a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( flood:Infrastructure flood:Facility ) ] ;
+    rdfs:range flood:Ward .
+
+flood:managedBy a owl:ObjectProperty ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( flood:Facility flood:PumpStation ) ] ;
+    rdfs:range flood:Officer .
+
+flood:partOf a owl:ObjectProperty ;
+    rdfs:domain flood:Pump ;
+    rdfs:range flood:PumpStation .
+
+flood:FE_01 a flood:FloodEvent,
+        owl:NamedIndividual ;
+    flood:affects flood:Saidapet,
+        flood:Velachery ;
+    flood:inundates flood:RD_VelacheryMainRd,
+        flood:SW_SaidapetSubway .
+
+flood:FE_02 a flood:FloodEvent,
+        owl:NamedIndividual ;
+    flood:affects flood:Pallikaranai,
+        flood:Perungudi,
+        flood:Sholinganallur ;
+    flood:inundates flood:RD_GST,
+        flood:RD_OMR .
+
+flood:Kilpauk a flood:HighGroundWard,
+        owl:NamedIndividual ;
+    flood:hasAlertLevel flood:AL_Green ;
+    flood:hasAtRiskPopulation 0 ;
+    flood:hasElevationM 9.8 ;
+    flood:hasPopulation 76000 .
+
+flood:PS_Pallikaranai a flood:PumpStation,
+        owl:NamedIndividual ;
+    flood:isOperational true ;
+    flood:locatedIn flood:Pallikaranai ;
+    flood:managedBy flood:OFF_Ramesh ;
+    flood:servesWard flood:Pallikaranai .
+
+flood:PS_Velachery a flood:PumpStation,
+        owl:NamedIndividual ;
+    flood:isOperational true ;
+    flood:locatedIn flood:Velachery ;
+    flood:managedBy flood:OFF_Ramesh ;
+    flood:servesWard flood:Velachery .
+
+flood:RC_PallikaranaiSchool a flood:ReliefCamp,
+        owl:NamedIndividual ;
+    flood:hasCapacity 600 ;
+    flood:locatedIn flood:Pallikaranai ;
+    flood:managedBy flood:OFF_Priya .
+
+flood:RC_SaidapetCommunity a flood:ReliefCamp,
+        owl:NamedIndividual ;
+    flood:hasCapacity 500 ;
+    flood:locatedIn flood:Saidapet ;
+    flood:managedBy flood:OFF_Priya .
+
+flood:RD_GST a flood:Road,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Pallikaranai .
+
+flood:RD_OMR a flood:Road,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Sholinganallur .
+
+flood:RD_VelacheryMainRd a flood:Road,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Velachery .
+
+flood:SW_SaidapetSubway a flood:Subway,
+        owl:NamedIndividual ;
+    flood:locatedIn flood:Saidapet .
+
+flood:servesWard a owl:ObjectProperty ;
+    rdfs:domain flood:PumpStation ;
+    rdfs:range flood:Ward ;
+    owl:inverseOf flood:isServedBy .
+
+flood:AL_Yellow a flood:RainfallAlertLevel,
+        owl:NamedIndividual ;
+    flood:hasThresholdMm 64.5 .
+
+flood:AdyarRiver a flood:River,
+        owl:NamedIndividual ;
+    flood:flowsInto flood:BuckinghamCanal ;
+    flood:hasDangerLevelM 5.0 ;
+    flood:hasWaterLevelM 3.1 .
+
+flood:AnnaNagar a flood:HighGroundWard,
+        owl:NamedIndividual ;
+    flood:hasAlertLevel flood:AL_Green ;
+    flood:hasAtRiskPopulation 0 ;
+    flood:hasElevationM 11.5 ;
+    flood:hasPopulation 165000 .
+
+flood:Canal a owl:Class ;
+    rdfs:subClassOf flood:WaterBody .
+
+flood:RC_AnnaNagarHall a flood:ReliefCamp,
+        owl:NamedIndividual ;
+    flood:hasCapacity 1500 ;
+    flood:locatedIn flood:AnnaNagar ;
+    flood:managedBy flood:OFF_Karthik .
+
+flood:RC_VelacheryHS a flood:ReliefCamp,
+        owl:NamedIndividual ;
+    flood:hasCapacity 800 ;
+    flood:locatedIn flood:Velachery ;
+    flood:managedBy flood:OFF_Ramesh .
+
+flood:Reservoir a owl:Class ;
+    rdfs:subClassOf flood:WaterBody .
+
+flood:isOperational a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:domain flood:PumpStation ;
+    rdfs:range xsd:boolean .
+
+flood:AL_Orange a flood:RainfallAlertLevel,
+        owl:NamedIndividual ;
+    flood:hasThresholdMm 115.6 .
+
+flood:AL_Red a flood:RainfallAlertLevel,
+        owl:NamedIndividual ;
+    flood:hasThresholdMm 204.5 .
+
+flood:BuckinghamCanal a flood:Canal,
+        owl:NamedIndividual ;
+    flood:hasDangerLevelM 4.5 ;
+    flood:hasWaterLevelM 1.9 .
+
+flood:EvacuationOrder a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:GeographicArea a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:Hospital a owl:Class ;
+    rdfs:subClassOf flood:Facility .
+
+flood:OFF_Karthik a flood:Officer,
+        owl:NamedIndividual ;
+    flood:hasPhone "+91-44-2500-0103"^^xsd:string .
+
+flood:OFF_Priya a flood:Officer,
+        owl:NamedIndividual ;
+    flood:hasPhone "+91-44-2500-0102"^^xsd:string .
+
+flood:Perungudi a flood:LowLyingWard,
+        owl:NamedIndividual ;
+    flood:evacuatesTo flood:RC_VelacheryHS ;
+    flood:hasAlertLevel flood:AL_Red ;
+    flood:hasAtRiskPopulation 900 ;
+    flood:hasElevationM 2.1 ;
+    flood:hasPopulation 87000 .
+
+flood:Resource a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:River a owl:Class ;
+    rdfs:subClassOf flood:WaterBody .
+
+flood:Sholinganallur a flood:LowLyingWard,
+        owl:NamedIndividual ;
+    flood:evacuatesTo flood:RC_AnnaNagarHall ;
+    flood:hasAlertLevel flood:AL_Orange ;
+    flood:hasAtRiskPopulation 1200 ;
+    flood:hasElevationM 2.9 ;
+    flood:hasPopulation 134000 .
+
+flood:isServedBy a owl:ObjectProperty ;
+    rdfs:domain flood:Ward ;
+    rdfs:range flood:PumpStation ;
+    owl:inverseOf flood:servesWard .
+
+flood:AL_Green a flood:RainfallAlertLevel,
+        owl:NamedIndividual ;
+    flood:hasThresholdMm 0.0 .
+
+flood:HighGroundWard a owl:Class ;
+    rdfs:subClassOf flood:Ward .
+
+flood:OFF_Ramesh a flood:Officer,
+        owl:NamedIndividual ;
+    flood:hasPhone "+91-44-2500-0101"^^xsd:string .
+
+flood:PortablePump a owl:Class ;
+    rdfs:subClassOf flood:Pump .
+
+flood:RescueBoat a owl:Class ;
+    rdfs:subClassOf flood:Resource .
+
+flood:Subway a owl:Class ;
+    rdfs:subClassOf flood:Infrastructure .
+
+flood:Facility a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:HeavyRainfall a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:LowLyingWard a owl:Class ;
+    rdfs:subClassOf flood:Ward ;
+    owl:disjointWith flood:HighGroundWard .
+
+flood:Pump a owl:Class ;
+    rdfs:subClassOf flood:Resource ;
+    owl:disjointWith flood:RescueBoat .
+
+flood:Road a owl:Class ;
+    rdfs:subClassOf flood:Infrastructure .
+
+flood:StormwaterDrain a owl:Class ;
+    rdfs:subClassOf flood:Infrastructure .
+
+flood:FloodEvent a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:Infrastructure a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:Officer a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:ReliefCamp a owl:Class ;
+    rdfs:subClassOf flood:Facility ;
+    owl:disjointWith flood:Hospital .
+
+flood:Saidapet a flood:LowLyingWard,
+        owl:NamedIndividual ;
+    flood:evacuatesTo flood:RC_SaidapetCommunity ;
+    flood:hasAlertLevel flood:AL_Yellow ;
+    flood:hasAtRiskPopulation 450 ;
+    flood:hasElevationM 3.2 ;
+    flood:hasPopulation 121000 .
+
+flood:Pallikaranai a flood:LowLyingWard,
+        owl:NamedIndividual ;
+    flood:evacuatesTo flood:RC_PallikaranaiSchool ;
+    flood:hasAlertLevel flood:AL_Red ;
+    flood:hasAtRiskPopulation 1400 ;
+    flood:hasElevationM 1.8 ;
+    flood:hasPopulation 98000 .
+
+flood:RainfallAlertLevel a owl:Class ;
+    rdfs:subClassOf owl:Thing .
+
+flood:Velachery a flood:LowLyingWard,
+        owl:NamedIndividual ;
+    flood:evacuatesTo flood:RC_AnnaNagarHall,
+        flood:RC_VelacheryHS ;
+    flood:hasAlertLevel flood:AL_Orange ;
+    flood:hasAtRiskPopulation 2200 ;
+    flood:hasElevationM 2.5 ;
+    flood:hasPopulation 142000 .
+
+flood:WaterBody a owl:Class ;
+    rdfs:subClassOf flood:GeographicArea .
+
+flood:PumpStation a owl:Class ;
+    rdfs:subClassOf flood:Infrastructure .
+
+flood:Ward a owl:Class ;
+    rdfs:subClassOf flood:GeographicArea ;
+    owl:disjointWith flood:WaterBody .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( flood:GeographicArea flood:Infrastructure flood:Facility flood:Resource flood:Officer flood:RainfallAlertLevel flood:FloodEvent flood:EvacuationOrder flood:HeavyRainfall ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( flood:AL_Green flood:AL_Yellow flood:AL_Orange flood:AL_Red ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( flood:River flood:Canal flood:Reservoir ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( flood:PumpStation flood:StormwaterDrain flood:Road flood:Subway ) .
+

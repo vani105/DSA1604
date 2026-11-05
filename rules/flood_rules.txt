@@ -1,0 +1,38 @@
+FLOOD-RESPONSE PRODUCTION RULES (12)  -- priority = salience, higher fires first
+
+R01  [Red alert]  priority=90  specificity=2
+    IF rainfall_24h >= 204.5 mm AND alert < RED THEN alert := RED
+
+R02  [Orange alert]  priority=80  specificity=2
+    IF rainfall_24h >= 115.6 mm AND alert < ORANGE THEN alert := ORANGE
+
+R03  [Yellow alert]  priority=70  specificity=2
+    IF rainfall_24h >= 64.5 mm AND alert < YELLOW THEN alert := YELLOW
+
+R04  [River-level escalation]  priority=85  specificity=3
+    IF alert is YELLOW or ORANGE AND receiving river level >= danger level THEN raise alert by one level (once)
+
+R05  [Mandatory evacuation]  priority=100  specificity=4
+    IF alert = RED AND ward is low-lying AND at-risk residents > 0 AND no evacuation ordered THEN order MANDATORY evacuation to designated camps
+
+R06  [Advisory evacuation]  priority=60  specificity=4
+    IF alert = ORANGE AND ward is low-lying AND at-risk residents > 0 AND no evacuation ordered THEN issue ADVISORY evacuation
+
+R07  [Camp overflow]  priority=88  specificity=2
+    IF evacuation ordered AND residents left unplaced (designated camps full) THEN open overflow shelter
+
+R08  [Deploy portable pump]  priority=95  specificity=4
+    IF alert >= ORANGE AND ward low-lying AND its pump station NOT operational AND a portable pump is free THEN deploy portable pump
+
+R09  [Standby pump]  priority=50  specificity=4
+    IF alert >= YELLOW AND ward low-lying AND station operational AND a portable pump is free THEN pre-position pump on standby
+
+R10  [Road closure]  priority=75  specificity=1
+    IF water depth on road >= 0.30 m THEN close road and divert traffic
+
+R11  [Subway closure]  priority=78  specificity=1
+    IF water depth in subway >= 0.15 m THEN close subway and dispatch dewatering pump
+
+R12  [Hospital protection]  priority=92  specificity=3
+    IF alert = RED AND ward contains a hospital THEN put hospital on emergency footing, confirm rescue boat, notify officer
+

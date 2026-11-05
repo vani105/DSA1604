@@ -1,0 +1,13 @@
+# CQ2: For every low-lying ward, can its designated relief camp(s) hold the residents
+#      living in flood-prone pockets? (total designated camp capacity vs. at-risk population)
+PREFIX flood: <http://example.org/flood#>
+SELECT ?ward ?atRisk (SUM(?cap) AS ?totalCampCapacity)
+       (IF(SUM(?cap) >= ?atRisk, "ENOUGH", "SHORTFALL") AS ?status)
+WHERE {
+  ?ward a flood:LowLyingWard ;
+        flood:hasAtRiskPopulation ?atRisk ;
+        flood:evacuatesTo ?camp .
+  ?camp flood:hasCapacity ?cap .
+}
+GROUP BY ?ward ?atRisk
+ORDER BY ?ward

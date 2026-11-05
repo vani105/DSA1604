@@ -1,0 +1,59 @@
+CLASS HIERARCHY (asserted + defined)
+EvacuationOrder   [1 ind.]
+Facility   [6 ind.]
+  +- Hospital   [2 ind.]
+  +- ReliefCamp   [4 ind.]
+FloodEvent   [2 ind.]
+GeographicArea   [12 ind.]
+  +- Ward   [8 ind.]
+    +- HighGroundWard   [3 ind.]
+    +- LowLyingWard   [5 ind.]
+    +- ServedWard   [0 ind.]
+    +- UnprotectedWard   [0 ind.]
+  +- WaterBody   [4 ind.]
+    +- Canal   [1 ind.]
+    +- Reservoir   [1 ind.]
+    +- River   [2 ind.]
+HeavyRainfall   [2 ind.]
+Infrastructure   [12 ind.]
+  +- PumpStation   [4 ind.]
+    +- OperationalPumpStation   [0 ind.]
+  +- Road   [3 ind.]
+  +- StormwaterDrain   [3 ind.]
+  +- Subway   [2 ind.]
+Officer   [3 ind.]
+RainfallAlertLevel   [4 ind.]
+Resource   [7 ind.]
+  +- Pump   [5 ind.]
+    +- PortablePump   [3 ind.]
+  +- RescueBoat   [2 ind.]
+
+OBJECT PROPERTIES                    DOMAIN -> RANGE
+  affects        FloodEvent                       -> Ward
+  causes         HeavyRainfall                    -> FloodEvent
+  deployedIn     (PortablePump or RescueBoat)     -> Ward
+  evacuatesTo    Ward                             -> ReliefCamp
+  flowsInto      (StormwaterDrain or WaterBody)   -> WaterBody  ['Transitive']
+  hasAlertLevel  Ward                             -> RainfallAlertLevel  ['Functional']
+  inundates      FloodEvent                       -> (Road or Subway)
+  isServedBy     Ward                             -> PumpStation  inverse=servesWard
+  issuedFor      EvacuationOrder                  -> Ward
+  locatedIn      (Infrastructure or Facility)     -> Ward
+  managedBy      (Facility or PumpStation)        -> Officer
+  partOf         Pump                             -> PumpStation
+  servesWard     PumpStation                      -> Ward  inverse=isServedBy
+
+DATA PROPERTIES                      DOMAIN -> RANGE
+  hasAtRiskPopulation    Ward           -> int
+  hasCapacity            ReliefCamp     -> int
+  hasDangerLevelM        WaterBody      -> float
+  hasElevationM          Ward           -> float
+  hasPhone               Officer        -> str
+  hasPopulation          Ward           -> int
+  hasPumpingCapacityLps  Pump           -> int
+  hasRainfallMm          HeavyRainfall  -> float
+  hasThresholdMm         RainfallAlertLevel -> float
+  hasWaterLevelM         WaterBody      -> float
+  isOperational          PumpStation    -> bool
+
+TOTALS: 28 classes, 13 object properties, 11 data properties, 49 individuals
